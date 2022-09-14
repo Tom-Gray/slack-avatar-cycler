@@ -1,0 +1,17 @@
+schedule:
+  - morning:
+     image: "./Homestar/cranky.png"
+     time: "9am"
+  - lunch:
+     image: "./Homestar/closed_mouth.png"
+     time: "1230pm"
+  - arvo:
+     image: "./Homestar/open_mouth.png"
+     time: "2pm"
+  - clocked_off:
+     image: "./Homestar/weary.yaml"
+     time: "5pm"
+  - sleep:
+     image: "./Homestar/sleepy.yaml"
+     time: "8pm"
+

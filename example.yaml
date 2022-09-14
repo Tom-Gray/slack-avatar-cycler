@@ -1,0 +1,23 @@
+element:
+  - one:
+      url: http://test
+      nested: 123
+  - two:
+      url: http://test
+      nested: 123
+schedule:
+  - morning:
+      image: "./Homestar/cranky.png"
+      time: 09:00am
+  - lunch:
+      image: "./Homestar/closed_mouth.png"
+      time: "1200"
+  - arvo:
+      image: "./Homestar/open_mouth.png"
+      time: "1300"
+  - clocked_off:
+      image: "./Homestar/weary.png"
+      time: "1700"
+  - sleep:
+      image: "./Homestar/sleepy.png"
+      time: "2000"
