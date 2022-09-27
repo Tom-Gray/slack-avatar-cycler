@@ -1,17 +1,23 @@
 schedule:
   - morning:
-     image: "./Homestar/cranky.png"
-     time: "9am"
+     imageFile: "./Homestar/cranky.png"
+     startTime: "08:00AM"
+     endTime: "10:00AM"
   - lunch:
-     image: "./Homestar/closed_mouth.png"
-     time: "1230pm"
+     imageFile: "./Homestar/closed_mouth.png"
+     startTime: "10:00AM"
+     endTime: "2:30PM"
   - arvo:
-     image: "./Homestar/open_mouth.png"
-     time: "2pm"
-  - clocked_off:
-     image: "./Homestar/weary.yaml"
-     time: "5pm"
+     imageFile: "./Homestar/open_mouth.png"
+     startTime: "2:30PM"
+     endTime: "5:00PM"
+  - evening:
+     imageFile: "./Homestar/weary.png"
+     startTime: "5:00PM"
+     endTime: "8:00PM"
   - sleep:
-     image: "./Homestar/sleepy.yaml"
-     time: "8pm"
-
+     imageFile: "./Homestar/sleepy.png"
+     startTime: "8:00PM"
+     endTime: "06:00AM"
+  - default:
+      imageFile: "./Homestar/sleepy.png"
