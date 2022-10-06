@@ -38,3 +38,8 @@ The Slack user token needs to be provided by setting the `SLACK_TOKEN` env var.
 ## Images
 
 Images need to be stored on the filesystem in a location accessible to the app
+
+## Todo
+
+add better logging
+
