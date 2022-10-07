@@ -2,6 +2,8 @@ package client
 
 import (
 	"bytes"
+	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"mime/multipart"
@@ -9,20 +11,16 @@ import (
 	"os"
 )
 
-func SetProfileImage(Client *SlackClient, path string) {
+func SetProfileImage(Client *SlackClient, path string) error {
 	fmt.Printf("Setting profile image to file locatated at %v", path)
 	values := map[string]io.Reader{
 		"image": mustOpen(path),
 	}
 	err := Upload(Client, values)
 	if err != nil {
-		panic(err)
+		return err
 	}
-
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+	return nil
 
 }
 
@@ -68,15 +66,21 @@ func Upload(Client *SlackClient, values map[string]io.Reader) (err error) {
 	// Submit the request
 	res, err := Client.HTTPClient.Do(req)
 	if err != nil {
-		return
+		fmt.Errorf("making request failed: %w", err)
 	}
 
 	// Check the response
 	if res.StatusCode != http.StatusOK {
 		err = fmt.Errorf("bad status: %s", res.Status)
 	}
-	fmt.Printf("Response: %v", res.StatusCode)
-
+	s := slackError{}
+	body, _ := io.ReadAll(res.Body)
+	json.Unmarshal(body, &s)
+	if s.Ok != true {
+		fmt.Errorf("upload: post failed: %w", s.Error)
+		err := errors.New(s.Error)
+		return err
+	}
 	return
 }
 

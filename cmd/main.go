@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 	slack "slack-avatar-cycler/client"
@@ -21,6 +22,9 @@ func main() {
 
 	client := slack.New(client)
 	image := scheduler.GetImageForSchedulePeriod()
-	slack.SetProfileImage(client, image)
+	err := slack.SetProfileImage(client, image)
+	if err != nil {
+		fmt.Println(err)
+	}
 
 }
