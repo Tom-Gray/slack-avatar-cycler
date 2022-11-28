@@ -15,37 +15,40 @@ func TestEvaluatePeriod(t *testing.T) {
 	}{
 		{
 			name:        "should return morning period",
-			currentTime: "09:01AM",
-			startTime:   "09:00AM",
-			endTime:     "10:00AM",
+			currentTime: "09:36",
+			startTime:   "08:00",
+			endTime:     "10:00",
 			period:      "morning",
 		},
 		{
 			name:        "should return lunch period",
-			currentTime: "12:00PM",
-			startTime:   "10:00AM",
-			endTime:     "1:00PM",
+			currentTime: "12:00",
+			startTime:   "10:00",
+			endTime:     "13:00",
 			period:      "lunch",
 		},
 		{
 			name:        "should return afternoon period",
-			currentTime: "2:00PM",
-			startTime:   "1:00PM",
-			endTime:     "5:00PM",
-			period:      "afternoon",
+			currentTime: "14:00",
+			startTime:   "13:00",
+			endTime:     "17:00",
+			period:      "arvo",
 		},
 		{
 			name:        "should return night period",
-			currentTime: "11:00PM",
-			startTime:   "10:00PM",
-			endTime:     "6:00AM",
+			currentTime: "23:00",
+			startTime:   "22:00",
+			endTime:     "06:00",
 			period:      "night",
 		},
 	}
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			out := evaluatePeriod(test.currentTime, test.startTime, test.endTime, test.period)
+			current := constructTimeValues(test.currentTime)
+			start := constructTimeValues(test.startTime)
+			end := constructTimeValues(test.endTime)
+			out := evaluatePeriodNew(current, start, end, test.period)
 			require.Equal(t, test.period, out)
 		})
 	}

@@ -1,23 +1,23 @@
 schedule:
   - morning:
       imageFile: "./Homestar/cranky.png"
-      startTime: "08:00AM"
-      endTime: "10:00AM"
+      startTime: "8:00"
+      endTime: "10:00"
   - lunch:
       imageFile: "./Homestar/closed_mouth.png"
-      startTime: "10:00AM"
-      endTime: "2:30PM"
+      startTime: "10:00"
+      endTime: "14:30"
   - arvo:
       imageFile: "./Homestar/open_mouth.png"
-      startTime: "2:30PM"
-      endTime: "5:00PM"
+      startTime: "14:30"
+      endTime: "17:00"
   - evening:
       imageFile: "./Homestar/open_mouth.png"
-      startTime: "5:30PM"
-      endTime: "10:00PM"
+      startTime: "17:00"
+      endTime: "22:00"
   - overnight:
       imageFile: "./Homestar/open_mouth.png"
-      startTime: "10:00PM"
-      endTime: "06:00AM"
+      startTime: "22:00"
+      endTime: "06:00"
   - default:
       imageFile: "./Homestar/sleepy.png"

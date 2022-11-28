@@ -31,7 +31,7 @@ func GetImageForSchedulePeriod() string {
 	}
 	fmt.Println(config)
 	currentPeriod := EvaluateSchedule(config)
-	fmt.Println(currentPeriod)
+	fmt.Printf("current period is: %v\n", currentPeriod)
 	return currentPeriod
 
 }
@@ -39,13 +39,15 @@ func GetImageForSchedulePeriod() string {
 //EvaluateSchedule determines the current period and returns the
 //corresponding image file.
 func EvaluateSchedule(config Config) string {
-	currentTime := time.Now().Format(time.Kitchen)
+
 	for period := range config.Period {
 		for k, v := range config.Period[period] {
 
-			fmt.Printf("Period: %v\nStartTime: %v\nEndTime: %v\n", k, v.StartTime, v.EndTime)
-			if evaluatePeriod(currentTime, v.StartTime, v.EndTime, k) != "" {
-				fmt.Printf("Current period is: %v", k)
+			startTime := constructTimeValues(v.StartTime)
+			endTime := constructTimeValues(v.EndTime)
+			currentTime := time.Now()
+			if evaluatePeriodNew(currentTime, startTime, endTime, k) != "" {
+				fmt.Printf("Current period is: %v\n", k)
 				return v.ImageFile
 			}
 		}
@@ -53,11 +55,44 @@ func EvaluateSchedule(config Config) string {
 	return ""
 }
 
-func evaluatePeriod(now string, start string, end string, period string) string {
-	fmt.Printf("Current time is %v\n", now)
-	if now > start && now < end {
-		fmt.Printf("We are currently within the %v period\n", period)
-		return period
+//constructTimeValues converts the stringified "kitchen" value to a time object.
+func constructTimeValues(timeString string) time.Time {
+	now := time.Now()
+	timeValue, err := time.ParseInLocation("2006-01-02 15:04",
+		fmt.Sprintf("%d-%d-%d %s", now.Year(), now.Month(), now.Day(), timeString), time.Local)
+	if err != nil {
+		fmt.Println(err)
+		panic(err)
 	}
-	return ""
+	return timeValue
+}
+
+func evaluatePeriodNew(now time.Time, start time.Time, end time.Time, period string) string {
+	fmt.Printf("Current time is %v\n", now)
+
+	// validate timings.
+	if start.After(end) {
+		fmt.Printf("period %v probably extends past midnight. Adjusting.\n ", period)
+		var err error
+		tmr := now.Add(24 * time.Hour)
+		end, err = time.ParseInLocation("2006-01-02 15:04",
+			fmt.Sprintf("%d-%d-%d %s", tmr.Year(), tmr.Month(), tmr.Day(), end), time.Local)
+		if err != nil {
+			panic(err)
+		}
+
+	}
+
+	// if startTime is before now
+	if start.Before(now) {
+		if end.After(now) {
+			fmt.Printf("we are in the period: %v\v", period)
+			return period
+		}
+
+		fmt.Printf("We are not in period: %v\n", period)
+		return ""
+	}
+
+	return "default"
 }

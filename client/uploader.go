@@ -74,8 +74,7 @@ func Upload(Client *SlackClient, values map[string]io.Reader) (err error) {
 		err = fmt.Errorf("bad status: %s", res.Status)
 	}
 	s := slackError{}
-	body, _ := io.ReadAll(res.Body)
-	json.Unmarshal(body, &s)
+	json.NewDecoder(res.Body).Decode(&s)
 	if s.Ok != true {
 		fmt.Errorf("upload: post failed: %w", s.Error)
 		err := errors.New(s.Error)
@@ -85,6 +84,7 @@ func Upload(Client *SlackClient, values map[string]io.Reader) (err error) {
 }
 
 func mustOpen(f string) *os.File {
+	fmt.Printf("verifying file %v exists\n", f)
 	r, err := os.Open(f)
 	if err != nil {
 		panic(err)
