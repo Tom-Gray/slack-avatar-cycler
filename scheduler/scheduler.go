@@ -36,8 +36,8 @@ func GetImageForSchedulePeriod() string {
 
 }
 
-//EvaluateSchedule determines the current period and returns the
-//corresponding image file.
+// EvaluateSchedule determines the current period and returns the
+// corresponding image file.
 func EvaluateSchedule(config Config) string {
 
 	for period := range config.Period {
@@ -55,7 +55,7 @@ func EvaluateSchedule(config Config) string {
 	return ""
 }
 
-//constructTimeValues converts the stringified "kitchen" value to a time object.
+// constructTimeValues converts the stringified "kitchen" value to a time object.
 func constructTimeValues(timeString string) time.Time {
 	now := time.Now()
 	timeValue, err := time.ParseInLocation("2006-01-02 15:04",
@@ -73,14 +73,8 @@ func evaluatePeriodNew(now time.Time, start time.Time, end time.Time, period str
 	// validate timings.
 	if start.After(end) {
 		fmt.Printf("period %v probably extends past midnight. Adjusting.\n ", period)
-		var err error
-		tmr := now.Add(24 * time.Hour)
-		end, err = time.ParseInLocation("2006-01-02 15:04",
-			fmt.Sprintf("%d-%d-%d %s", tmr.Year(), tmr.Month(), tmr.Day(), end), time.Local)
-		if err != nil {
-			panic(err)
-		}
-
+		// extend the enddate 24 hours to signal that it ends tomorrow
+		end = end.Add(24 * time.Hour)
 	}
 
 	// if startTime is before now
