@@ -36,7 +36,7 @@ Times must be represented in the 24hour format in the above example.
 
 The Slack user token needs to be provided by setting the `SLACK_TOKEN` env var.
 
-Slack user tokens are prefixed with `xoxb`
+Slack user tokens are prefixed with `xoxp`
 
 ## Images
 
