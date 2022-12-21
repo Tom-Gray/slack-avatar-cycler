@@ -3,7 +3,9 @@
 Update your slack avatar according to a schedule. 
 
 ## Purpose 
-I have no actual use for this but I thought it might be interesting. 
+Annoy your work colleagues by constantly cycling your avatar according to time of day.
+
+I thought this might be interesting to write. 
 
 
 ## Usage
@@ -16,24 +18,25 @@ First, define your schedule in this format
 ```
 schedule:
   - morning:
-     imageFile: "./Homestar/cranky.png"
-     startTime: "08:00AM"
-     endTime: "10:00AM"
+      imageFile: "./Homestar/cranky.png"
+      startTime: "8:00"
+      endTime: "10:00"
   - lunch:
-     imageFile: "./Homestar/closed_mouth.png"
-     startTime: "10:00AM"
-     endTime: "2:30PM"
-  - arvo:
-     imageFile: "./Homestar/open_mouth.png"
-     startTime: "2:30PM"
-     endTime: "5:00PM"
+      imageFile: "./Homestar/closed_mouth.png"
+      startTime: "10:00"
+      endTime: "14:30"
   - default:
       imageFile: "./Homestar/sleepy.png"
 ```
-Each schedule period ends at the defined start and end time. This feels a bit awkward. 
+Each schedule period ends at the defined start and end time. This feels a bit awkward.
+
+Times must be represented in the 24hour format in the above example.
+
 ## Auth
 
 The Slack user token needs to be provided by setting the `SLACK_TOKEN` env var.
+
+Slack user tokens are prefixed with `xoxb`
 
 ## Images
 
@@ -42,4 +45,6 @@ Images need to be stored on the filesystem in a location accessible to the app
 ## Todo
 
 add better logging
+
+
 
